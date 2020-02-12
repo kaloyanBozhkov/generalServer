@@ -1,15 +1,17 @@
 
-const express = require("express")
-const stripe = require("stripe")(process.env.KEY)
+const express = require('express')
+const stripe = require('stripe')(process.env.KEY)
+const cors = require('cors')
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(cors())
 
-app.post("/checkout", (req, res) => {
+app.post('/checkout', (req, res) => {
 
-  console.log("Request:", req.body)
+  console.log('Request:', req.body)
   const { amount, currency, token } = req.body
 
   let error
@@ -31,14 +33,14 @@ app.post("/checkout", (req, res) => {
   }))
   .then((charge) => {
     
-    console.log("Charge:", { charge })
-    status = "success"
+    console.log('Charge:', { charge })
+    status = 'success'
     
   })
   .catch((err) => {
-    console.error("Error:", err)
+    console.error('Error:', err)
     error = err
-    status = "failure"
+    status = 'failure'
   })
   .finally(() => {
     res.json({ error, status })
