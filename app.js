@@ -1,19 +1,19 @@
-const express = require("express");
-const stripe = require("stripe")(process.env.KEY);
-const cors = require("cors");
+const express = require('express')
+const stripe = require('stripe')(process.env.KEY)
+const cors = require('cors')
 
-const app = express();
+const app = express()
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cors())
 
-app.post("/checkout", (req, res) => {
-  console.log("Request:", req.body);
-  const { amount, currency, token } = req.body;
+app.post('/checkout', (req, res) => {
+  console.log('Request:', req.body)
+  const { amount, currency, token } = req.body
 
-  let error;
-  let status;
+  let error
+  let status
 
   stripe.customers
     .create({
@@ -26,40 +26,40 @@ app.post("/checkout", (req, res) => {
         currency,
         customer: customer.id,
         receipt_email: token.email,
-        description: "Paying Koko through his payMe app",
+        description: 'Paying Koko through his payMe app',
         metadata: {
           ...token.card,
         },
       })
     )
     .then((charge) => {
-      console.log("Charge:", { charge });
-      status = "success";
+      console.log('Charge:', { charge })
+      status = 'success'
     })
     .catch((err) => {
-      console.error("Error:", err);
-      error = err;
-      status = "failure";
+      console.error('Error:', err)
+      error = err
+      status = 'failure'
     })
     .finally(() => {
-      res.json({ error, status });
-    });
-});
+      res.json({ error, status })
+    })
+})
 
-app.post("/fetchWeather", (req, res) => {
-  console.log("Request:", req.body);
-  const { lat, lng, date } = req.body;
+app.post('/fetchWeather', (req, res) => {
+  console.log('Request:', req.body)
+  const { lat, lng, date } = req.body
   fetch(`https://dark-sky.p.rapidapi.com/${lat},${lng},${date}`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "x-rapidapi-host": "dark-sky.p.rapidapi.com",
-      "x-rapidapi-key": process.env.DARK_SKY_API_KEY,
+      'x-rapidapi-host': 'dark-sky.p.rapidapi.com',
+      'x-rapidapi-key': process.env.DARK_SKY_API_KEY,
     },
   })
     .then((e) => res.json(e))
-    .catch((e) => res.json(e));
-});
+    .catch((e) => res.json(e))
+})
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000)
 
-module.exports = app;
+module.exports = app
