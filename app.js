@@ -2,12 +2,18 @@ const express = require('express')
 const stripe = require('stripe')(process.env.KEY)
 const cors = require('cors')
 const axios = require('axios')
+var bodyParser = require('body-parser')
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cors())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
 
 app.post('/checkout', (req, res) => {
   console.log('Request:', req.body)
@@ -48,14 +54,13 @@ app.post('/checkout', (req, res) => {
 })
 
 app.post('/fetchWeather', (req, res) => {
-  console.log('Request:', req.body)
+  console.log('Request:', req, req.body)
   const { lat, lng, date } = req.body
   axios(`https://dark-sky.p.rapidapi.com/${lat},${lng},${date}`, {
     method: 'GET',
     headers: {
       'x-rapidapi-host': 'dark-sky.p.rapidapi.com',
       'x-rapidapi-key': process.env.DARK_SKY_API_KEY,
-      'Access-Control-Allow-Origin': '*',
     },
   })
     .then((e) => res.json(e))
