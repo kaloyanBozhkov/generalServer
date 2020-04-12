@@ -1,6 +1,7 @@
 const express = require('express')
 const stripe = require('stripe')(process.env.KEY)
 const cors = require('cors')
+const axios = require('axios')
 
 const app = express()
 
@@ -49,7 +50,7 @@ app.post('/checkout', (req, res) => {
 app.post('/fetchWeather', (req, res) => {
   console.log('Request:', req.body)
   const { lat, lng, date } = req.body
-  fetch(`https://dark-sky.p.rapidapi.com/${lat},${lng},${date}`, {
+  axios(`https://dark-sky.p.rapidapi.com/${lat},${lng},${date}`, {
     method: 'GET',
     headers: {
       'x-rapidapi-host': 'dark-sky.p.rapidapi.com',
