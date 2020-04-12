@@ -64,7 +64,10 @@ app.post('/fetchWeather', (req, res) => {
       'Access-Control-Allow-Origin': '*',
     },
   })
-    .then((e) => res.json(e))
+    .then((e) => {
+      console.log(e)
+      res.json(e)
+    })
     .catch((e) => res.json(e))
 })
 
