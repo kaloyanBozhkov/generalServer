@@ -61,6 +61,7 @@ app.post('/fetchWeather', (req, res) => {
     headers: {
       'x-rapidapi-host': 'dark-sky.p.rapidapi.com',
       'x-rapidapi-key': process.env.DARK_SKY_API_KEY,
+      'Access-Control-Allow-Origin': '*',
     },
   })
     .then((e) => res.json(e))
