@@ -54,7 +54,7 @@ app.post('/checkout', (req, res) => {
 })
 
 app.post('/fetchWeather', (req, res) => {
-  console.log('Request:', req, req.body)
+  console.log('Request:', req.body)
   const { lat, lng, date } = req.body
   axios(`https://dark-sky.p.rapidapi.com/${lat},${lng},${date}`, {
     method: 'GET',
