@@ -2,7 +2,8 @@ const express = require('express')
 const stripe = require('stripe')(process.env.KEY)
 const cors = require('cors')
 const axios = require('axios')
-var bodyParser = require('body-parser')
+const connection = require('./helpers/setupConnection')
+const bodyParser = require('body-parser')
 
 const app = express()
 
@@ -69,6 +70,28 @@ app.post('/fetchWeather', (req, res) => {
       res.json(e)
     })
     .catch((e) => res.json(e))
+})
+
+app.post('/endpoint', (req, res) => {
+  const { query } = req.body
+
+  try {
+    connection.query(
+      query,
+      (err, results, fields) => {
+        if (err) {
+          res.json(err)
+        } else {
+          res.json({
+            results,
+            fields,
+          })
+        }
+      }
+    )
+  } catch (error) {
+    res.json({ error: error.message })
+  }
 })
 
 app.listen(process.env.PORT || 3000)
