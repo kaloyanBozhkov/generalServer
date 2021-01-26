@@ -71,9 +71,9 @@ app.post('/fetchWeather', (req, res) => {
 
 // below are handled by node server on cpanel
 
-app.get('api/generalServer', (req, res) => res.send('Hello, this is the generalServer API. Nothing to look at here directly.'))
+app.get('/api/generalServer/endpoint', (req, res) => res.send('Hello, this is the generalServer API. Nothing to look at here directly.'))
 
-app.post('api/generalServer/endpoint', (req, res) => {
+app.post('/api/generalServer/endpoint', (req, res) => {
   const { query } = req.body
 
   try {
@@ -95,6 +95,6 @@ app.post('api/generalServer/endpoint', (req, res) => {
   }
 })
 
-app.listen(process.env.PORT || 3000)
+app.listen(3000)
 
 module.exports = app
