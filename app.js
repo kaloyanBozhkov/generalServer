@@ -72,8 +72,10 @@ app.post('/fetchWeather', (req, res) => {
     .catch((e) => res.json(e))
 })
 
-app.post('/endpoint', (req, res) => {
-  console.log('hit')
+
+// below are handled by node server on cpanel
+
+app.post('api/generalServer/endpoint', (req, res) => {
   const { query } = req.body
 
   try {
