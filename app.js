@@ -73,6 +73,7 @@ app.post('/fetchWeather', (req, res) => {
 })
 
 app.post('/endpoint', (req, res) => {
+  console.log('hit')
   const { query } = req.body
 
   try {
