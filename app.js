@@ -1,6 +1,6 @@
 const express = require('express')
 const stripe = require('stripe')(process.env.KEY)
-const cors = require('cors')
+
 const axios = require('axios')
 const connection = require('./helpers/setupConnection')
 
@@ -8,7 +8,7 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cors())
+
 // create application/json parser & use middleware
 app.use(express.json())
 
